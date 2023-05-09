@@ -1,89 +1,91 @@
 <template>
   <div className="parent-div">
-    <headertitle />
-    <h3>{{ userName }}</h3>
-    <h4>Email :- {{ userEmail }}</h4>
-    <h4>User-Id : -{{ userId }}</h4>
-    <p>{{ count }}</p>
-    <span>Inline</span>
-    <button class="clk-btn" @click="onShowUserID()">Click Me</button>
-    <button class="clk-btn-alrt" @click="onAlert()">Alert</button>
-    <div>
-      <p>{{ dataList }}</p>
-      <button class="show-me-btn" @click="onShowData()">Show Me</button>
-    </div>
-    <div>
-      <p>{{ filterData }}</p>
-      <button class="show-me-btn" @click="onFilterData()">Filter List</button>
-    </div>
     <FileExampleVue />
+    <p
+      class="class-binding"
+      :class="`${isStyle ? 'style-true' : 'style-false'}`"
+    >
+      Stle class Binding
+    </p>
+    <button @click="onStyleChange()">Show style</button>
+
+    <h1>V-if Example</h1>
+    <hr />
+    <div v-if="ifExample">
+      <p>
+        The Lorem ipum filling text is used by graphic designers, programmers
+        and printers with the aim of occupying the spaces of a website, an
+        advertising product or an editorial production whose final text is not
+        yet ready. This expedient serves to get an idea of the finished product
+        that will soon be printed or disseminated via digital channels.
+      </p>
+    </div>
+    <div v-else-if="isName">
+      <h1>V-else-if</h1>
+    </div>
+    <div v-else>
+      <p>V-else</p>
+    </div>
+
+    <button @click="shorIFData()">Show Text</button>
+    <h1>V-show Example</h1>
+    <hr />
+    <div>
+      <p>
+        The Lorem ipum filling text is used by graphic designers, programmers
+        and printers with the aim of occupying the spaces of a website, an
+        advertising product or an editorial production whose final text is not
+        yet ready. This expedient serves to get an idea of the finished product
+        that will soon be printed or disseminated via digital channels.
+      </p>
+    </div>
+    <input v-show="showExample" placeholder="Enter any text" />
+    <button @click="onShowExample()">Show data</button>
+
+    <hr />
+    <Home />
   </div>
 </template>
 
 <script>
 import FileExampleVue from "./components/FileExample.vue";
 import headertitle from "./components/HeaderTitle.vue";
+import Home from "./components/Home/home.vue";
 
 export default {
   name: "App",
-  components: { headertitle, FileExampleVue },
+  components: { headertitle, FileExampleVue, Home },
   props: {},
   data() {
     return {
-      userName: "Juhi Bhardwaj",
-      userEmail: "juhibhardwaj20@gmail.com",
-      userId: "",
-      count: 0,
-      obj: [
-        { name: "Juhi", age: 26 },
-        { name: "Mahi", age: 30 },
-        { name: "Test", age: 21 },
-        { name: "Vaishali", age: 22 },
-      ],
-      dataList: [],
-      filterData: [],
-      vIf: true,
+      isStyle: false,
+      ifExample: false,
+      showExample: false,
+      isName: false,
     };
   },
   methods: {
-    onShowUserID() {
-      console.log("this", this);
-      this.userId = 1234;
-      this.count = 220;
+    onStyleChange() {
+      this.isStyle = true;
     },
-    onAlert() {
-      alert("hello world!!");
+    shorIFData() {
+      this.ifExample = true;
     },
-    onShowData() {
-      const newArray = this.obj.map((elm, index, arr) => {
-        return elm.name;
-      });
-      this.dataList = newArray;
-      console.log("newArray", newArray);
-    },
-    onFilterData() {
-      const newFilterlist = this.obj.filter((item, index, arr) => {
-        return item.age > 22;
-      });
-      this.filterData = newFilterlist;
-      console.log("newFilterlist", newFilterlist);
+    onShowExample() {
+      this.showExample = true;
     },
   },
 };
 </script>
 
-<style>
-.clk-btn {
-  color: black;
-  border: 1px solid black;
-  background-color: royalblue;
+<style scoped>
+.class-binding {
+  font-weight: bold;
 }
-.clk-btn-alrt {
-  margin-left: 10px;
-  background-color: royalblue;
+.style-true {
+  font-size: x-large;
 }
-.show-me-btn {
-  background-color: royalblue;
-  margin-top: 20px;
+.style-false {
+  font-size: x-small;
 }
 </style>
