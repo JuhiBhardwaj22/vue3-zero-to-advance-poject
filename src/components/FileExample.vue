@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>V{{ title }}</h1>
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -10,7 +8,7 @@ export default {
   components: {},
   data() {
     return {
-      title: "Vue Example File",
+      title: "Vue.JS Training",
     };
   },
 };

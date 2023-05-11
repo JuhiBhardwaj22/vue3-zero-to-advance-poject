@@ -1,49 +1,47 @@
 <template>
   <div className="parent-div">
     <FileExampleVue />
-    <p
-      class="class-binding"
-      :class="`${isStyle ? 'style-true' : 'style-false'}`"
-    >
-      Stle class Binding
-    </p>
-    <button @click="onStyleChange()">Show style</button>
-
-    <h1>V-if Example</h1>
-    <hr />
-    <div v-if="ifExample">
-      <p>
-        The Lorem ipum filling text is used by graphic designers, programmers
-        and printers with the aim of occupying the spaces of a website, an
-        advertising product or an editorial production whose final text is not
-        yet ready. This expedient serves to get an idea of the finished product
-        that will soon be printed or disseminated via digital channels.
-      </p>
-    </div>
-    <div v-else-if="isName">
-      <h1>V-else-if</h1>
-    </div>
-    <div v-else>
-      <p>V-else</p>
-    </div>
-
-    <button @click="shorIFData()">Show Text</button>
-    <h1>V-show Example</h1>
-    <hr />
-    <div>
-      <p>
-        The Lorem ipum filling text is used by graphic designers, programmers
-        and printers with the aim of occupying the spaces of a website, an
-        advertising product or an editorial production whose final text is not
-        yet ready. This expedient serves to get an idea of the finished product
-        that will soon be printed or disseminated via digital channels.
-      </p>
-    </div>
-    <input v-show="showExample" placeholder="Enter any text" />
-    <button @click="onShowExample()">Show data</button>
-
     <hr />
     <Home />
+    <br />
+    <br />
+    <span v-for="elm in 10">{{ elm }} {{ " " }}</span>
+
+    <br />
+    <br />
+    <p v-for="(elm, index) in 5" :key="index">{{ index }} - {{ elm }}</p>
+    <br />
+    <br />
+
+    <div v-for="(item, index) in items" :key="index">
+      <h3>{{ index }}-{{ item }}</h3>
+    </div>
+    <br />
+    <br />
+
+    <div v-for="(emp, index) in myObj" :key="index">
+      <h2>{{ emp.empID }}:{{ emp.empName }}:{{ emp.empSalary }}</h2>
+    </div>
+
+    <br />
+    <div v-for="(elm, key, index) in itemsObj" :key="key">
+      <h3>{{ key }} : {{ elm }} {{ index }}</h3>
+    </div>
+    <br />
+    <br />
+    <ul v-for="(item, index) in sets" :key="index">
+      <li v-for="elm in getEvenData(item)">{{ elm }}</li>
+    </ul>
+
+    <div>
+      <button @click="getData()">Show API Data</button>
+    </div>
+
+    <ul v-for="items in dataList">
+      <li>
+        {{ items.title }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -58,21 +56,32 @@ export default {
   props: {},
   data() {
     return {
-      isStyle: false,
-      ifExample: false,
-      showExample: false,
-      isName: false,
+      items: ["Juhi", "ABCD", "EFHG", "IJKL", "MNOP"],
+      myObj: [
+        { empName: "Juhi", empID: 12, empSalary: 1000 },
+        { empName: "Mahi", empID: 13, empSalary: 5000 },
+        { empName: "Test", empID: 14, empSalary: 1500 },
+        { empName: "Vaishali", empID: 15, empSalary: 2000 },
+      ],
+      itemsObj: {
+        Title: "How to do lists in Vue",
+        Author: "Jane Doe",
+        PublishedAt: "2016-04-10",
+      },
+      sets: [
+        [1, 2, 3, 4, 5],
+        [6, 7, 8, 9, 10],
+      ],
+      dataList: [],
     };
   },
   methods: {
-    onStyleChange() {
-      this.isStyle = true;
+    getEvenData(num) {
+      return num.filter((item) => item % 2 === 0);
     },
-    shorIFData() {
-      this.ifExample = true;
-    },
-    onShowExample() {
-      this.showExample = true;
+    async getData() {
+      const data = await fetch("https://jsonplaceholder.typicode.com/todos");
+      this.dataList = await data.json();
     },
   },
 };
