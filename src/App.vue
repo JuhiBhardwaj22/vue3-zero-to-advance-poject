@@ -1,140 +1,116 @@
 <template>
   <div class="parent-div">
-    <Header />
-
-    <h1>BootStrap</h1>
-    <button type="button" class="btn btn-primary">Primary</button>
-
-    <h1>Accordin</h1>
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button
-            class="accordion-button"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-            My info
-          </button>
-        </h2>
-        <div
-          id="collapseOne"
-          class="accordion-collapse collapse show"
-          aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            <strong>This is the first item's accordion body.</strong> It is
-            shown by default, until the collapse plugin adds the appropriate
-            classes that we use to style each element. These classes control the
-            overall appearance, as well as the showing and hiding via CSS
-            transitions. You can modify any of this with custom CSS or
-            overriding our default variables. It's also worth noting that just
-            about any HTML can go within the <code>.accordion-body</code>,
-            though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseTwo"
-            aria-expanded="false"
-            aria-controls="collapseTwo"
-          >
-            My Skills
-          </button>
-        </h2>
-        <div
-          id="collapseTwo"
-          class="accordion-collapse collapse"
-          aria-labelledby="headingTwo"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is
-            hidden by default, until the collapse plugin adds the appropriate
-            classes that we use to style each element. These classes control the
-            overall appearance, as well as the showing and hiding via CSS
-            transitions. You can modify any of this with custom CSS or
-            overriding our default variables. It's also worth noting that just
-            about any HTML can go within the <code>.accordion-body</code>,
-            though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseThree"
-            aria-expanded="false"
-            aria-controls="collapseThree"
-          >
-            MY Data
-          </button>
-        </h2>
-        <div
-          id="collapseThree"
-          class="accordion-collapse collapse"
-          aria-labelledby="headingThree"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            <strong>This is the third item's accordion body.</strong> It is
-            hidden by default, until the collapse plugin adds the appropriate
-            classes that we use to style each element. These classes control the
-            overall appearance, as well as the showing and hiding via CSS
-            transitions. You can modify any of this with custom CSS or
-            overriding our default variables. It's also worth noting that just
-            about any HTML can go within the <code>.accordion-body</code>,
-            though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h1>Event Handling</h1>
-    <button @click="onClick()">SubmitWs</button>
-    <div>
-      <br />
-      <br />
-      <a href="https://getbootstrap.com/docs/5.0/components/accordion/">Link</a>
-    </div>
-    <br />
-    <br />
+    <file-example />
     <input
-      type="text"
-      placeholder="Enter Search here"
-      @keyup.enter="onKEYEnter()"
+      class="input-area"
+      placeholder="Enter text here..."
+      v-model="countNum"
     />
+    <button @click="onSetValue()">Add</button>
+    <div class="main-div">
+      <div>
+        <button class="inc-btn" @click="OnIncreament()">+</button>
+      </div>
+      <div class="count">{{ count }}</div>
+      <div>
+        <button class="dec-btn" @click="onDecreament()">-</button>
+      </div>
+    </div>
+
+    <div>
+      <p>Mustache template</p>
+      <h3>{{ name }}</h3>
+    </div>
+    <div>
+      <h1>V-TEXT</h1>
+      <span v-text="vTextExample"></span>
+    </div>
+    <div>
+      <h1>V-HTML</h1>
+      <span v-html="test"></span>
+    </div>
+    <div>
+      <h1>V-MODEL</h1>
+      <p>{{ searchText }}</p>
+      <input
+        type="text"
+        class="input-area"
+        placeholder="Enter search here"
+        v-model="searchText"
+      />
+      <br />
+      <h1>V-Bind</h1>
+      <p v-bind:id="heading">Testing for V-BIND</p>
+      {{ searchText }}
+      <input
+        type="text"
+        class="input-area"
+        placeholder="Enter search here"
+        v-bind:valueS="searchText"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import Header from "./components/header/Header.vue";
-
+import FileExample from "./components/FileExample.vue";
 export default {
   name: "App",
-  components: { Header },
+  components: { FileExample },
   props: {},
   data() {
-    return {};
+    return {
+      name: "Juhi Bhardwaj",
+      vTextExample: "V-TEXT Example",
+      test: "<b><p>V-HTML Example</p></b>",
+      searchText: "",
+      checked: false,
+      count: 0,
+      countNum: 0,
+      heading: "heading_id_1",
+    };
   },
   methods: {
-    onKEYEnter() {
-      console.log("Click event");
+    OnIncreament() {
+      this.count++;
+    },
+    onDecreament() {
+      if (this.count === 0) {
+        alert("Please use Increament button now");
+      }
+      this.count--;
+    },
+    onSetValue() {
+      this.count = this.countNum;
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.input-area {
+  margin-left: 10px;
+}
+.main-div {
+  display: flex;
+}
+.inc-btn,
+.dec-btn {
+  height: 50px;
+  width: 46px;
+}
+.inc-btn {
+  margin-right: 30px;
+}
+.count {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  margin-right: 30px;
+  text-align: center;
+  padding-top: 10px;
+}
+.input-area {
+  margin-bottom: 10px;
+}
+</style>
