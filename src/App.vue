@@ -1,53 +1,29 @@
 <template>
   <div class="parent-div">
     <file-example />
-    <input
-      class="input-area"
-      placeholder="Enter text here..."
-      v-model="countNum"
-    />
-    <button @click="onSetValue()">Add</button>
-    <div class="main-div">
+    <div>
+      <h5>Computed Property</h5>
+      <span>{{
+        author.books.length > 0 ? "Greater Than 0" : "Less Than 0"
+      }}</span>
       <div>
-        <button class="inc-btn" @click="OnIncreament()">+</button>
+        <span>{{ bookList }}</span>
       </div>
-      <div class="count">{{ count }}</div>
-      <div>
-        <button class="dec-btn" @click="onDecreament()">-</button>
-      </div>
-    </div>
-
-    <div>
-      <p>Mustache template</p>
-      <h3>{{ name }}</h3>
-    </div>
-    <div>
-      <h1>V-TEXT</h1>
-      <span v-text="vTextExample"></span>
-    </div>
-    <div>
-      <h1>V-HTML</h1>
-      <span v-html="test"></span>
-    </div>
-    <div>
-      <h1>V-MODEL</h1>
-      <p>{{ searchText }}</p>
-      <input
-        type="text"
-        class="input-area"
-        placeholder="Enter search here"
-        v-model="searchText"
-      />
       <br />
-      <h1>V-Bind</h1>
-      <p v-bind:id="heading">Testing for V-BIND</p>
-      {{ searchText }}
-      <input
-        type="text"
-        class="input-area"
-        placeholder="Enter search here"
-        v-bind:valueS="searchText"
-      />
+      <div>
+        <input
+          class="input-area"
+          type="text"
+          v-model="searchText"
+          placeholder="Enter Text Here"
+        />
+      </div>
+      <br />
+      <br />
+      <div v-for="list in filterData" :key="list.uid">
+        <span>{{ list.name }}</span> {{ "  :" }}
+        <span>{{ list.uid }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -60,57 +36,71 @@ export default {
   props: {},
   data() {
     return {
-      name: "Juhi Bhardwaj",
-      vTextExample: "V-TEXT Example",
-      test: "<b><p>V-HTML Example</p></b>",
-      searchText: "",
-      checked: false,
-      count: 0,
-      countNum: 0,
-      heading: "heading_id_1",
+      author: {
+        name: "John Doe",
+        books: [
+          "Vue 2 - Advanced Guide",
+          "Vue 3 - Basic Guide",
+          "Vue 4 - The Mystery",
+        ],
+      },
+      searchText: null,
+      userData: [
+        {
+          name: "Tunde Test",
+          uid: "LfhxERlvyfh2auIY0HnpidjJg3L2",
+        },
+        {
+          name: "bola",
+          uid: "R6lyXuNwZfc9ztLDfIZBSZLg2QD2",
+        },
+        {
+          uid: " k8ZVBdA9wfetiB8vJV3Qc07NZty1",
+          name: "Supreme",
+        },
+        {
+          name: "Mango",
+          uid: "LfhxERlvyfh2auIY0HnpidjJg3L2",
+        },
+        {
+          name: "Eamil Mail",
+          uid: "R6lyXuNwZfc9ztLDfIZBSZLg2QD2",
+        },
+        {
+          uid: " k8ZVBdA9wfetiB8vJV3Qc07NZty1",
+          name: "Dev thakur",
+        },
+      ],
     };
   },
-  methods: {
-    OnIncreament() {
-      this.count++;
+  computed: {
+    bookList() {
+      return this.author.books.length > 0 ? "Greater Than 0" : "Less Than 0";
     },
-    onDecreament() {
-      if (this.count === 0) {
-        alert("Please use Increament button now");
+    bookListInfo(name) {
+      return name;
+    },
+    filterData() {
+      if (this.searchText) {
+        return this.userData.filter((item) => {
+          return this.searchText
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.name.toLowerCase().includes(v));
+        });
+      } else {
+        return this.userData;
       }
-      this.count--;
-    },
-    onSetValue() {
-      this.count = this.countNum;
     },
   },
+  methods: {},
 };
 </script>
 
 <style scoped>
 .input-area {
+  width: 310px;
   margin-left: 10px;
-}
-.main-div {
-  display: flex;
-}
-.inc-btn,
-.dec-btn {
-  height: 50px;
-  width: 46px;
-}
-.inc-btn {
-  margin-right: 30px;
-}
-.count {
-  height: 50px;
-  width: 50px;
-  border: 1px solid black;
-  margin-right: 30px;
-  text-align: center;
-  padding-top: 10px;
-}
-.input-area {
-  margin-bottom: 10px;
+  border-radius: 5px;
 }
 </style>
