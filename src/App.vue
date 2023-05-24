@@ -24,7 +24,19 @@
         <span>{{ list.name }}</span> {{ "  :" }}
         <span>{{ list.uid }}</span>
       </div>
+      <h1>{{ user }}</h1>
     </div>
+    <h3>{{ count }}</h3>
+    <button @click="onClickCount()">CountINC</button>
+    <br />
+    <br />
+    <br />
+
+    <input v-model="textValue" />
+    <button @click="onClickValue()">Value</button>
+    <ul v-for="item in newArr">
+      <input type="text" v-model="newArr" />
+    </ul>
   </div>
 </template>
 
@@ -44,6 +56,7 @@ export default {
           "Vue 4 - The Mystery",
         ],
       },
+      user: "",
       searchText: null,
       userData: [
         {
@@ -71,6 +84,9 @@ export default {
           name: "Dev thakur",
         },
       ],
+      count: 0,
+      textValue: "",
+      newArr: [],
     };
   },
   computed: {
@@ -78,6 +94,7 @@ export default {
       return this.author.books.length > 0 ? "Greater Than 0" : "Less Than 0";
     },
     bookListInfo(name) {
+      var test = this;
       return name;
     },
     filterData() {
@@ -93,7 +110,33 @@ export default {
       }
     },
   },
-  methods: {},
+  watch: {
+    searchText(newValue, oldValue) {
+      console.log("newValue ->", newValue);
+      if (newValue === "Test") {
+        this.userData = [];
+        this.user = "Value is NIL";
+      }
+    },
+    count(newValue, oldValue) {
+      if (newValue === 10) {
+        alert("Value is 10");
+      }
+    },
+    newArr(newValue, oldValue) {
+      console.log("newValue ->", newValue);
+      console.log("oldValue ->", oldValue);
+    },
+  },
+  methods: {
+    onClickCount() {
+      this.count++;
+    },
+    onClickValue() {
+      this.newArr.push(this.textValue);
+      console.log("  this.newArr", this.newArr);
+    },
+  },
 };
 </script>
 
