@@ -4,6 +4,10 @@
     <p>{{ msg }}</p>
     <p>{{ value }}</p>
     <p v-show="visible">Boolean</p>
+
+    <h1>Emit</h1>
+
+    <button @click="onSendData()">Send Data to Parent</button>
   </div>
 </template>
 
@@ -23,11 +27,18 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      count: 0,
+    };
   },
   methods: {
     onSAVE() {
       console.log("title", this.title);
+    },
+    onSendData() {
+      this.$emit("getFullName", "Juhi Bhardwaj");
+      this.$emit("getNameInfo", "JUhi", "Bhardwaj");
+      this.$emit("countData", this.count++);
     },
   },
 };

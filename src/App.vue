@@ -3,25 +3,35 @@
     <file-example />
     <h5>{{ title }}</h5>
     <my-component />
+    <parent />
   </div>
 </template>
 
 <script>
 import FileExample from "./components/FileExample.vue";
 import MyComponent from "./propComp/MyComponentParent.vue";
+import Parent from "./components/emit/Parent.vue";
+
 export default {
   name: "App",
-  components: { FileExample, MyComponent },
+  components: { FileExample, MyComponent, Parent },
   props: {},
   data() {
     return {
       title: "Props",
       test: "",
+      info: [],
     };
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    // getData() {
+    //   this.emitter.on("formInfo", (data) => {
+    //     console.log("data", data);
+    //   });
+    // },
+  },
 };
 </script>
 
