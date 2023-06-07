@@ -1,36 +1,47 @@
 <template>
   <div class="parent-div">
     <file-example />
-    <h5>{{ title }}</h5>
-    <my-component />
-    <parent />
+    <counter />
+    <NewComponent />
+    <!-- <p>{{ userinfo }}</p> -->
   </div>
 </template>
 
 <script>
 import FileExample from "./components/FileExample.vue";
-import MyComponent from "./propComp/MyComponentParent.vue";
-import Parent from "./components/emit/Parent.vue";
+import Counter from "./components/counterExample/Counter.vue";
+import NewComponent from "./components/header/NewComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
-  components: { FileExample, MyComponent, Parent },
+  components: { FileExample, Counter, NewComponent },
   props: {},
   data() {
     return {
       title: "Props",
       test: "",
       info: [],
+      msg: "",
+      dataList: {},
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      userinfo: "getData",
+    }),
+  },
   watch: {},
   methods: {
-    // getData() {
-    //   this.emitter.on("formInfo", (data) => {
-    //     console.log("data", data);
-    //   });
-    // },
+    sendData() {
+      this.emitter.emit("sendList", [1, 2, 3, 4, 5]);
+    },
+  },
+  mounted() {
+    console.log("this.", this.userinfo);
+    this.emitter.on("myData", (data) => {
+      this.msg = data;
+    });
   },
 };
 </script>
